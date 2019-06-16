@@ -6,20 +6,19 @@ import Project.Tetris.Tetris;
 public class Machine {
 
     // Genes
-    public static double printHeight     = 0.5;
-    public static double printRoughness  = 0.5;
-    public static double printNumHoles   = 0.5;
-    public static double printHoleDepth  = 0.5;
-    public static double printBreake     = 0.5;
+    public static double printHeight;
+    public static double printRoughness;
+    public static double printNumHoles;
+    public static double printHoleDepth;
+    public static double printBreake;
 
     private Tetris game;
     private int[] bestMove = {5, 0};
+    public Genome machineGenome;
 
-    public Genome machineGenome = new Genome((1/Math.sqrt(5)),
-            (1/Math.sqrt(5)), (1/Math.sqrt(5)), (1/Math.sqrt(5)), (1/Math.sqrt(5)));
-
-    public Machine(Tetris game){
+    public Machine(Tetris game, Genome machineGenome){
         this.game = game;
+        this.machineGenome = machineGenome;
     }
 
     // Runs Mashine
@@ -37,7 +36,7 @@ public class Machine {
         int[] bestMove = {2, 0};
         double bestFitness = 0;
 
-        for(int x = 1; x <= 10; x++) {
+        for(int x = 0; x <= 11; x++) {      //Goint the extra piece to ensure every shape is accounted for.
             for(int r = 0; r <= 3; r++) {
                 double testFitness = getFitnessOfMove(x, r);
                 if (testFitness > bestFitness) {
@@ -50,16 +49,13 @@ public class Machine {
         return bestMove;
     }
 
-    // Private ---------------------------------------------------------------------------------------------------------
-
     // Returns Fitness Score of move ie. proximity to move will bring well fitness to mashinegenome
     private double getFitnessOfMove(int x, int r) {
         BackEndTetris testWell = this.game.backEnd.cloneTetris();
-
         long oldScore = this.game.backEnd.score;
         dropPice(x, r, testWell);
-        long scorDiff = oldScore - this.game.backEnd.score;
-
+        long scorDiff = testWell.score - oldScore;
+        printBreake = scorDiff;
         return machineGenome.returnFitness(testWell.gameWell, scorDiff);
     }
 

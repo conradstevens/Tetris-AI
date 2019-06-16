@@ -9,7 +9,7 @@ public class BackEndTetris implements Serializable {
 
     public Pice piece = new Pice();
     public Well gameWell = new Well();
-    public long score;
+    public int score;
 
     // Collision test for the dropping piece
     private boolean collidesAt(int x, int y, int rotation) {

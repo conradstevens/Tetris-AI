@@ -18,7 +18,6 @@ public class Tetris extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
 		// Paint the well
 		g.fillRect(0, 0, 26*12, 26*23);
 		for (int i = 0; i < 12; i++) {
@@ -54,19 +53,23 @@ public class Tetris extends JPanel {
 	private void drawScore(Graphics g) {
 		g.setColor(Color.WHITE);
 
-		g.drawString("Score: " + backEnd.score + "                       height: " +
-				reduceDeciaml(Machine.printHeight) + "         roughness " +
+		g.drawString("Score: " + backEnd.score + "                       Height: " +
+				reduceDeciaml(Machine.printHeight) + "         Roughness " +
 				reduceDeciaml(Machine.printRoughness), 0, 26*24 - 6);
 
-		g.drawString("numHoles: " +
-				reduceDeciaml(Machine.printNumHoles) + "      breake: " +
+		g.drawString("NumHoles: " +
+				reduceDeciaml(Machine.printNumHoles) + "      Breake: " +
 				reduceDeciaml(Machine.printHoleDepth), 0, 26*24 + 12);
 
 		g.drawString("-------------------------------------------------------------------------------", 0, 26*24 + 24);
 
-		g.drawString("hiehgt: " +
-				backEnd.gameWell.getMaxHeight() + "                       roughness: " +
-				backEnd.gameWell.getRoughness() + "     	  numHoles: " + backEnd.gameWell.getNumHoles(),0,26*24 +36);
-		g.drawString("holeDepth: " + backEnd.gameWell.getHoleDepth(), 0, 26*24 + 60);
+		g.drawString("Hiehgt: " + backEnd.gameWell.getMaxHeight() +
+                "                       Roughness: " + backEnd.gameWell.getRoughness() +
+                "     	  NumHoles: " + backEnd.gameWell.getNumHoles()
+                ,0,26*24 +36 );
+
+
+		g.drawString("HoleDepth: " + backEnd.gameWell.getHoleDepth() +
+                     "               CheckBreak: " + (int) Machine.printBreake, 0, 26*24 + 60);
 	}
 }

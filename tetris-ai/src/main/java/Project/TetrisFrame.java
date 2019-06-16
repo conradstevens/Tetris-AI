@@ -1,9 +1,12 @@
 package Project;
 
+import Project.AI.Genome;
 import Project.AI.Machine;
+import Project.AI.MasterAI;
 import Project.Tetris.Tetris;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -12,14 +15,14 @@ import static javax.swing.SwingUtilities.invokeLater;
 public class TetrisFrame {
     private final Tetris game = new Tetris();
 
+    // Make the falling piece drop every second
     public void startPlay() {
-        // Make the falling piece drop every second
         new Thread() {
             @Override
             public void run() {
                 game.init();
                 repaint();
-
+                //noinspection InfiniteLoopStatement
                 while (true) {
                     try {
                         Thread.sleep(500);
@@ -36,9 +39,9 @@ public class TetrisFrame {
         }.start();
     }
 
-    public void startAi() {
-        // Make the falling piece drop every second And Have Project.AI make moves
-        final Machine machine = new Machine(game);
+    // Make the falling piece drop every second And Have Project.AI make moves
+    public void RunAiMachineDefault(Genome genome) {
+        final Machine machine = new Machine(game, genome);
         new Thread() {
             @Override
             public void run() {
@@ -61,12 +64,25 @@ public class TetrisFrame {
         }.start();
     }
 
-    public void makeFrame(){
-        JFrame f = new JFrame("Project/Project.Tetris");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(12 * 26 + 15, 27 * 24 + 95); // Change 95 to make bigger
-        f.setVisible(true);
+    // Have a Genome play an invisile game and return it's score
+    public int scilentAIRun(Genome genome){
+        Machine invisMachine = new Machine(game, genome);
+        boolean gameRunning = true;
+        game.init();
 
+        while (gameRunning) {
+            game.backEnd.lower();
+            if (game.backEnd.checkOver()) {
+                gameRunning = false;
+            }
+            invisMachine.runMashine();
+        }
+        //System.out.println(game.backEnd.score);
+        return game.backEnd.score;
+    }
+
+    public void makeFrame() {
+        JFrame f = makeFameBox();
         f.add(game);
 
         // Keyboard controls
@@ -94,10 +110,16 @@ public class TetrisFrame {
                 }
                 repaint();
             }
+            public void keyReleased(KeyEvent e) { }
+        } );
+    }
 
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+    public JFrame makeFameBox(){
+        JFrame f = new JFrame("Project/Project.Tetris");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setSize(12 * 26 + 15, 27 * 24 + 95); // Change 95 to make bigger
+        f.setVisible(true);
+        return f;
     }
 
     void repaint() {
