@@ -2,30 +2,36 @@ package Project.AI;
 
 import Project.TetrisFrame;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 class Competitors {
-    private HashMap<Genome, Integer> compSet;
+    private ArrayList<Genome> compList = new ArrayList<Genome>();
+    private double numRuns;
 
     // Creates dictionary of mutants, with score set to zero
-    Competitors(Genome centralGenome, int numCompetitors, double permutation) {
-        compSet = new HashMap<>();
-        for (int index = 0; index < numCompetitors - 1; index ++){
-            Genome mutant = centralGenome.mutate(permutation);
-            compSet.put(mutant, 0);
+    Competitors(Genome centralGenome, int numCompetitors, double numRuns, double permutation) {
+        this.numRuns = numRuns;
+        for (int index = 0; index < numCompetitors; index ++) {
+            compList.add(centralGenome.mutate(permutation));
         }
-        compSet.put(centralGenome, 0);
+        compList.add(centralGenome);
     }
 
     // Runs all the compSet and determines their score
     void runCompetitors(){
         TetrisFrame scilentScoreFrame = new TetrisFrame();
-        for (Genome genome : compSet.keySet()){
-            compSet.put(genome, scilentScoreFrame.scilentAIRun(genome));
+        int gameNum = 1;
+        for (Genome genome : compList){
+            System.out.print(gameNum + ", ");
+            for (int j = 0; j < numRuns; j++) {
+                genome.sumSocre += scilentScoreFrame.scilentAIRun(genome);
+            }
+            gameNum += 1;
         }
     }
 
-    //
+    // breeds the 2 genomes, prioritizing the genomes quaitly based on score
     Genome breed(){
         Genome  parent1 = getParent();
         Genome  parent2 = getParent();
@@ -39,13 +45,13 @@ class Competitors {
         Genome  parent      = new Genome();
         int     parentScore = 0;
 
-        for (Genome genome : compSet.keySet()){
-            if (compSet.get(genome) >= parentScore) {
-                parentScore    = compSet.get(genome);
+        for (Genome genome : compList){
+            if (genome.sumSocre >= parentScore) {
+                parentScore    = genome.sumSocre;
                 parent         = genome;
             }
         }
-        compSet.remove(parent);
+        compList.remove(parent);
         return parent;
     }
 }

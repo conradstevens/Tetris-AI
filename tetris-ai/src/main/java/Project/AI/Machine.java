@@ -6,11 +6,12 @@ import Project.Tetris.Tetris;
 public class Machine {
 
     // Genes
-    public static double printHeight;
+    public static double printAggregateHeight;
     public static double printRoughness;
     public static double printNumHoles;
     public static double printHoleDepth;
     public static double printBreake;
+    public static double printMaxDiff;
 
     private Tetris game;
     private int[] bestMove = {5, 0};
@@ -53,6 +54,7 @@ public class Machine {
     private double getFitnessOfMove(int x, int r) {
         BackEndTetris testWell = this.game.backEnd.cloneTetris();
         long oldScore = this.game.backEnd.score;
+
         dropPice(x, r, testWell);
         long scorDiff = testWell.score - oldScore;
         printBreake = scorDiff;

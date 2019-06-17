@@ -5,9 +5,7 @@ import Project.TetrisFrame;
 public class RunAi {
 
     public static void main(String[] args) {
-        //TetrisFrame tetrisFrame = new TetrisFrame();
-        //tetrisFrame.makeFrame();
-        //tetrisFrame.startAi();
-        MasterAI masterAI = new MasterAI(10, 0.03);
+        MasterAI masterAI = new MasterAI(40, 1, 0.15);
+        masterAI.runAIOptimizationLoop();
     }
 }

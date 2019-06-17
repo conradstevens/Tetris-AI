@@ -80,7 +80,7 @@ public class Pice implements Serializable {
         rotation = 0;
         if (nextPieces.isEmpty()) {
             Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6);
-            Collections.shuffle(nextPieces);
+            // Collections.shuffle(nextPieces);
         }
         piceType = nextPieces.get(0);
         nextPieces.remove(0);

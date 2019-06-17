@@ -36,14 +36,12 @@ public class Well implements Serializable {
         return 23 - height;
     }
 
-    public int getMaxHeight() {
-        int maxHeight = 0;
+    public int getAggregateHeight() {
+        int aggHeight = 0;
         for (int x = 1; x < 11; x++) {
-            if (getColumHeight(x) > maxHeight) {
-                maxHeight = getColumHeight(x);
-            }
+            aggHeight += getColumHeight(x);
         }
-        return maxHeight;
+        return aggHeight;
     }
 
     public int getRoughness() {
@@ -85,6 +83,19 @@ public class Well implements Serializable {
             counting = false;
         }
         return holeDepth;
+    }
+
+    public int getHightDiff() {
+        int maxHeight = 0;
+        int minHeight = 22;
+        for (int x = 1; x < 11; x++) {
+            if (getColumHeight(x) > maxHeight) {
+                maxHeight = getColumHeight(x);
+            } if (getColumHeight(x) < minHeight) {
+                minHeight = getColumHeight(x);
+            }
+        }
+        return maxHeight - minHeight;
     }
 
     public int getBreaks() {

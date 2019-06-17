@@ -10,33 +10,39 @@ import static javax.swing.SwingUtilities.invokeLater;
 
 public class MasterAI {
 
-    private Competitors competitors;
-    private Genome      genRepTet;
-    private int         numMutants;
-    private double      perMutate;
-    private JFrame      frame;
-    private Tetris      visGame;
+    private Genome  genRepTet;
+    private JFrame  frame;
+    private Tetris  visGame;
+    private int     numMutants;
+    private int     generation  = 0;
+    private int     bestScore   = 0;
+    private double  perMutate;
+    private double  numRuns;
 
     //Establishes the classes variables
-    public MasterAI(int numMutants, double perMutate) {
+    public MasterAI(int numMutants, double numRuns, double perMutate) {
         this.numMutants = numMutants;
         this.perMutate  = perMutate;
-        this.genRepTet  = new Genome(Math.random(), Math.random(), Math.random(), Math.random(), Math.random());
+        this.numRuns    = numRuns;
+        this.genRepTet  = new Genome(Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random());
         TetrisFrame tf  = new TetrisFrame();
         frame           = tf.makeFameBox();
-
-        runAIOptimizationLoop();
     }
 
     // Runs the AI optimization loop
-    private void runAIOptimizationLoop() {
+    void runAIOptimizationLoop() {
         //noinspection InfiniteLoopStatement // An in infitire loop Running the AI.
         while (true) {
-            System.out.println("Running Generation's Tetris \n");
+            System.out.println("\nRunning Generation: " + generation + " Best Score: " + bestScore); generation += 1;
             System.out.println(genRepTet);
             runVisualTetris();
-            System.out.println("\nCreating next generation");
+            System.out.println("\nCreating next generation\n" +
+                    "------------------------------------------------------------------------------------------------");
             runCompetitors();
+
+            if (visGame.backEnd.score > bestScore) {
+                bestScore = visGame.backEnd.score;
+            }
         }
     }
 
@@ -65,7 +71,7 @@ public class MasterAI {
 
     // Runs the Competitors in the background and updates teh genome to be the most effective mutant
     private void runCompetitors() {
-        competitors = new Competitors(genRepTet, numMutants, perMutate);
+        Competitors competitors = new Competitors(genRepTet, numMutants, numRuns, perMutate);
         competitors.runCompetitors();
         genRepTet = competitors.breed();
     }
