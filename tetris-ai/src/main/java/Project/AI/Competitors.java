@@ -16,6 +16,7 @@ class Competitors {
             compList.add(centralGenome.mutate(permutation));
         }
         compList.add(centralGenome);
+        compList.add(centralGenome);
     }
 
     // Runs all the compSet and determines their score
@@ -35,7 +36,6 @@ class Competitors {
     Genome breed(){
         Genome  parent1 = getParent();
         Genome  parent2 = getParent();
-
         return parent1.breedWith(parent2);
     }
 

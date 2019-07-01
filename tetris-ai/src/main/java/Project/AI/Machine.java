@@ -35,7 +35,7 @@ public class Machine {
     private int[] bestMove() {
         //Returns the position and rotation of the best Project.Project.Tetris move
         int[] bestMove = {2, 0};
-        double bestFitness = 0;
+        double bestFitness = -100;
 
         for(int x = 0; x <= 11; x++) {      //Goint the extra piece to ensure every shape is accounted for.
             for(int r = 0; r <= 3; r++) {
@@ -47,6 +47,7 @@ public class Machine {
                 }
             }
         }
+        // System.out.println(bestMove[0] + " " + bestMove[1]);
         return bestMove;
     }
 
@@ -67,6 +68,7 @@ public class Machine {
             bet.move(-1);
         }
         else if (game.backEnd.piece.position.x < x){
+
             bet.move(+1);
         }
     }
