@@ -8,9 +8,10 @@ import java.util.Arrays;
 public class Genome {
     // Genome
     private double[] genome = new double[6];
-    int sumSocre    = 0;
+    public int sumSocre    = 0;
 
-    Genome(){}
+    public Genome(){}
+
     Genome(double aggHeight, double roughness, double numHoles, double holeDepth, double breake, double hightDiff){
         this.genome[0]  = aggHeight;
         this.genome[1]  = roughness;
@@ -19,11 +20,7 @@ public class Genome {
         this.genome[4]  = breake;
         this.genome[5]  = hightDiff;
 
-        Machine.printAggregateHeight    = aggHeight;
-        Machine.printHoleDepth          = roughness;
-        Machine.printNumHoles           = numHoles;
-        Machine.printRoughness          = holeDepth;
-        Machine.printMaxDiff            = hightDiff;
+        setCallingNums();
     }
 
     // returns the percent similarity between ideal well and the given well
@@ -46,7 +43,7 @@ public class Genome {
     }
 
     // Mutates the genome so every gene is varied by a max of perDif
-    Genome mutate(double percDif){
+    public Genome mutate(double percDif){
         Genome mutant = new Genome();
         for (int i = 0; i < genome.length; i++){
             double mutation = (Math.random() - 0.5) * 2 * percDif;
@@ -60,7 +57,7 @@ public class Genome {
     }
 
     // Returns the genome that is a product of this and partner breeding
-    Genome breedWith(Genome partner) {
+    public Genome breedWith(Genome partner) {
         Genome baybeGene    = new Genome();
         double[] zeroGenome = {0,0,0,0,0};
 
@@ -106,6 +103,15 @@ public class Genome {
             differenceVector[i] = v1[i] - v2[i];
         }
         return differenceVector;
+    }
+
+    // Sets the calling numbers, whould only be used for printing
+    private void setCallingNums() {
+        Machine.printAggregateHeight    = this.genome[0];
+        Machine.printHoleDepth          = this.genome[1];
+        Machine.printNumHoles           = this.genome[2];
+        Machine.printRoughness          = this.genome[3];
+        Machine.printMaxDiff            = this.genome[5];
     }
 
     // LEGACY ----------------------------------------------------------------------------------------------------------

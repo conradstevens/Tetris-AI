@@ -1,9 +1,10 @@
 package Project.AI;
+import Project.AI.Tournament.Competitors;
+import Project.AI.Tournament.RoundRobin;
 import Project.Tetris.Tetris;
 import Project.TetrisFrame;
 
 import javax.swing.*;
-import java.util.HashMap;
 import java.lang.Math;
 
 import static javax.swing.SwingUtilities.invokeLater;
@@ -38,7 +39,8 @@ public class MasterAI {
             runVisualTetris();
             System.out.println("\nCreating next generation\n" +
                     "------------------------------------------------------------------------------------------------");
-            runCompetitors();
+            //runCompetitors();
+            runTournament();
 
             if (visGame.backEnd.score > bestScore) {
                 bestScore = visGame.backEnd.score;
@@ -60,7 +62,7 @@ public class MasterAI {
 
         while (!visGame.backEnd.checkOver()) {
             try {
-                Thread.sleep(10);
+                Thread.sleep(1);
                 visGame.backEnd.lower();
 
             } catch (InterruptedException e) { e.printStackTrace(); }
@@ -69,13 +71,18 @@ public class MasterAI {
         }
     }
 
-    // Runs the Competitors in the background and updates teh genome to be the most effective mutant
+    // Runs the Competitors in the background and updates the genome to be the most effective mutant
     private void runCompetitors() {
         Competitors competitors = new Competitors(genRepTet, numMutants, numRuns, perMutate);
         competitors.runCompetitors();
         genRepTet = competitors.breed();
     }
 
+    // Runs the back propagation tournament to get the next generation
+    private void  runTournament(){
+        RoundRobin  tourney     = new RoundRobin(genRepTet, numMutants, numRuns, perMutate);
+        this.genRepTet = tourney.runTournament();
+    }
 
 
     void repaint() {
