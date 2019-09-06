@@ -1,6 +1,6 @@
 package Project.AI.Tournament;
 import Project.AI.Genome;
-import org.w3c.dom.ranges.Range;
+
 import java.util.ArrayList;
 
 public class RoundRobin extends Competitors{
@@ -8,7 +8,7 @@ public class RoundRobin extends Competitors{
     private ArrayList<TournNode>    round;
 
     //Round Robin
-    public RoundRobin(Genome genRepTet, int numMutants, double numRuns, double perMutate) {
+    public RoundRobin(Genome genRepTet, int numMutants, double numRuns, double perMutate){
         super(genRepTet, numMutants, numRuns, perMutate);  // numNodes must be a natural log of 2
     }
 
@@ -19,6 +19,7 @@ public class RoundRobin extends Competitors{
             makeRound();
             runRound();
         }
+        super.genomeWriter.closeWriter();
         return compList.get(0);
     }
 

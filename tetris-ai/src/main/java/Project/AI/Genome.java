@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 public class Genome {
     // Genome
-    private double[] genome = new double[6];
-    public int sumSocre    = 0;
+    public double[] genome = new double[6];
+    public int sumSocre     = 0;
 
     public Genome(){}
 

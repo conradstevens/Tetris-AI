@@ -15,7 +15,7 @@ public class Machine {
 
     private Tetris game;
     private int[] bestMove = {5, 0};
-    public Genome machineGenome;
+    private Genome machineGenome;
 
     public Machine(Tetris game, Genome machineGenome){
         this.game = game;
