@@ -11,21 +11,24 @@ public class RunGenome {
         // ***                                                                                             ***
         // ***                   ---   ENTER THE GENOME INFORMATION HERE  ---                              ***
         // ***                                                                                             ***
-                                            double aggHeight    = 1;
-                                            double roughness    = 1;
-                                            double numHoles     = 1;
-                                            double holeDepth    = 1;
-                                            double breake       = 1;
-                                            double hightDiff    = 1;
+                                            double aggHeight    = 0.4892611682771852;
+                                            double roughness    = 0.5081974962380555;
+                                            double numHoles     = 0.4982826320756096;
+                                            double holeDepth    = 0.13136056990618095;
+                                            double breake       = 0.4464740257527826;
+                                            double hightDiff    = 0.193593847028373;
 
-                                            long   sleepTime    = 30;
+                                            long   sleepTime    = 2;
+
+        // Score: 102
+
         // ***                                                                                             ***
         // ***                                                                                             ***
         // ***************************************************************************************************
         // ***************************************************************************************************
 
         Genome runningGenome    = new Genome(aggHeight,  roughness, numHoles, holeDepth, breake, hightDiff);
-        RunGeneration genRun    = new RunGeneration(true, sleepTime);
+        RunGeneration genRun    = new RunGeneration(false, sleepTime);
 
         genRun.run(runningGenome, 1);
     }

@@ -2,6 +2,7 @@ package Project.AI.Tournament;
 
 import Project.AI.Genome;
 import Project.AI.AIData.GenomeWriter;
+import Project.AI.Mutation;
 import Project.TetrisFrame;
 
 import java.util.ArrayList;
@@ -12,18 +13,17 @@ public class Competitors {
     private double numRuns;
 
     // Creates dictionary of mutants, with score set to zero
-    public Competitors(Genome centralGenome, int numCompetitors, double numRuns, double permutation) {
-        this.genomeWriter = new GenomeWriter("C://Users//conra//Desktop//tetris-ai//src//main//java//Project//AI/GenomeData");
+    public Competitors(Genome centralGenome, int numCompetitors, double numRuns, Mutation mutator) {
+        this.genomeWriter = new GenomeWriter("C://Users//conra//Desktop//tetris-ai//src//main//java//Project//AI//AIData/GenomeData");
         this.numRuns = numRuns;
         for (int index = 0; index < numCompetitors; index ++) {
-            compList.add(centralGenome.mutate(permutation));
+            compList.add(centralGenome.mutate(mutator));
         }
-        compList.add(centralGenome);
         compList.add(centralGenome);
     }
 
     // Runs all the compSet and determines their score
-    public void runCompetitors(){
+    public void runCompetitors() {
         TetrisFrame scilentScoreFrame = new TetrisFrame();
         int gameNum = 1;
         for (Genome genome : compList){
@@ -32,7 +32,7 @@ public class Competitors {
                 genome.sumSocre += scilentScoreFrame.scilentAIRun(genome);
             }
             genomeWriter.writeScore(genome.sumSocre);
-            System.out.print(gameNum + ", ");
+            System.out.print(genome.sumSocre + ", "); //System.out.print(gameNum + ", ");
             gameNum += 1;
         }
         System.out.println();

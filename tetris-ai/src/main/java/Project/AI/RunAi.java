@@ -1,5 +1,6 @@
 package Project.AI;
 
+@SuppressWarnings("ConstantConditions")
 public class RunAi {
 
     public static void main(String[] args) {
@@ -8,17 +9,22 @@ public class RunAi {
         // ***                                                                                             ***
         // ***                       ---   ENTER THE AI INFORMATION HERE  ---                              ***
         // ***
-                                    int     tournametSize      = 126;  // Must be of form (2^n - 2), n N
-                                    double  numRunsPerGenome   = 1;    // Only needed if pices are Random
-                                    double  percentMutation    = 0.5;  // Must be between [0,1]
+                                    int     tournametSize      = 15;     // Must be of form (2^n - 1), n N
+                                    double  numRunsPerGenome   = 1;     // Only needed if pices are Random
+                                    double  horzCompression    = 0.2;   // How fast will mutations decrease in size
+                                    double  startMutation      = 1.2;   // How much mutations to start
                                     long    sleepTime          = 1;
+
+                                    boolean useBest            = true;  // Uses the best genome in the backPropagation
+                                                                        // not the result of the backPropagation
                                     boolean runVisual          = false;
         // ***                                                                                             ***
         // ***                                                                                             ***
         // ***************************************************************************************************
         // ***************************************************************************************************
 
-        MasterAI masterAI = new MasterAI(tournametSize, numRunsPerGenome, percentMutation, sleepTime, runVisual);
+        Mutation mutator    = new Mutation(horzCompression, startMutation);
+        MasterAI masterAI   = new MasterAI(tournametSize, numRunsPerGenome, mutator, sleepTime, runVisual, useBest);
         masterAI.runAIOptimizationLoop();
     }
 }

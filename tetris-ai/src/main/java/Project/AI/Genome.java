@@ -7,18 +7,20 @@ import java.util.Arrays;
 
 public class Genome {
     // Genome
-    public double[] genome = new double[6];
+    public double[] genome  = new double[6];
     public int sumSocre     = 0;
+    public int score        = 0;
 
-    public Genome(){}
+    public Genome() {
+    }
 
-    Genome(double aggHeight, double roughness, double numHoles, double holeDepth, double breake, double hightDiff){
-        this.genome[0]  = aggHeight;
-        this.genome[1]  = roughness;
-        this.genome[2]  = numHoles;
-        this.genome[3]  = holeDepth;
-        this.genome[4]  = breake;
-        this.genome[5]  = hightDiff;
+    Genome(double aggHeight, double roughness, double numHoles, double holeDepth, double breake, double hightDiff) {
+        this.genome[0] = aggHeight;
+        this.genome[1] = roughness;
+        this.genome[2] = numHoles;
+        this.genome[3] = holeDepth;
+        this.genome[4] = breake;
+        this.genome[5] = hightDiff;
 
         setCallingNums();
     }
@@ -39,38 +41,33 @@ public class Genome {
     @Override
     public String toString() {
         return ("Height: " + this.genome[0] + "    roughness: " + this.genome[1] + "     numHoles: " + this.genome[2] +
-                "     holeDepth: " + this.genome[3] + "     break: " + this.genome[4] + "     maxHeightDiff: " + this.genome[5]);
+                "     holeDepth: " + this.genome[3] + "     break: " + this.genome[4] + "     maxHeightDiff: " + this.genome[5] +
+                "   Score: " + this.sumSocre);
     }
 
     // Mutates the genome so every gene is varied by a max of perDif
-    public Genome mutate(double percDif){
+    public Genome mutate(Mutation mutator) {
         Genome mutant = new Genome();
-        for (int i = 0; i < genome.length; i++){
-            double mutation = (Math.random() - 0.5) * 2 * percDif;
-            mutant.genome[i] = this.genome[i] + mutation;
-
-            if (mutant.genome[i] > 1) {mutant.genome[i] = 1;}
-            if (mutant.genome[i] < 0) {mutant.genome[i] = 0;}
-        }
-        //System.out.println(mutant);
+        mutant.genome = mutator.mutateGenome(this.genome);
+        mutant.makeGenomeOfRadious1(mutant.genome);
         return mutant;
     }
 
     // Returns the genome that is a product of this and partner breeding
     public Genome breedWith(Genome partner) {
         Genome baybeGene    = new Genome();
-        double[] zeroGenome = {0,0,0,0,0};
+        double[] zeroGenome = {0, 0, 0, 0, 0};
 
-        double sumsumScore  = this.sumSocre + partner.sumSocre;
+        double sumsumScore = this.sumSocre + partner.sumSocre;
         if (sumsumScore == 0) {
-            sumsumScore         = 1;
-            this.sumSocre       = 1;
-            partner.sumSocre    = 1;
+            sumsumScore = 1;
+            this.sumSocre = 1;
+            partner.sumSocre = 1;
         }
 
         for (int i = 0; i < genome.length; i++) {
-            baybeGene.genome[i] = (this.genome[i]*this.sumSocre/sumsumScore +
-                    partner.genome[i]*partner.sumSocre/sumsumScore) / 2;
+            baybeGene.genome[i] = (this.genome[i] * this.sumSocre / sumsumScore +
+                    partner.genome[i] * partner.sumSocre / sumsumScore) / 2;
         }
 
         baybeGene.makeGenomeOfRadious1(baybeGene.genome);
@@ -82,8 +79,8 @@ public class Genome {
     // Changes Genome proportionally to have radious 1
     private void makeGenomeOfRadious1(double[] genome) {
         double genomeRadious = getRadious(genome);
-        for(int i = 0; i < genome.length; i++) {
-            genome[i] = genome[i] * (1/genomeRadious);
+        for (int i = 0; i < genome.length; i++) {
+            genome[i] = genome[i] * (1 / genomeRadious);
         }
     }
 
@@ -91,18 +88,9 @@ public class Genome {
     private double getRadious(double[] genome) {
         double genomeRadious = 0;
         for (double gene : genome) {
-            genomeRadious += gene*gene;
+            genomeRadious += gene * gene;
         }
         return Math.sqrt(genomeRadious);
-    }
-
-    // Returns subtraction fo v1 and v2. Remark both V1 and V2 have to be of same length
-    private double[] subtractVector(double[] v1, double[] v2) {
-        double [] differenceVector = new double[v1.length];
-        for (int i = 0; i < v1.length; i++) {
-            differenceVector[i] = v1[i] - v2[i];
-        }
-        return differenceVector;
     }
 
     // Sets the calling numbers, whould only be used for printing
@@ -113,6 +101,12 @@ public class Genome {
         Machine.printRoughness          = this.genome[3];
         Machine.printMaxDiff            = this.genome[5];
     }
+}
+
+
+
+
+
 
     // LEGACY ----------------------------------------------------------------------------------------------------------
 
@@ -133,4 +127,12 @@ public class Genome {
 //        return getRadious(difVector);
 //    }
 
-}
+    // Returns subtraction fo v1 and v2. Remark both V1 and V2 have to be of same length
+//    private double[] subtractVector(double[] v1, double[] v2) {
+//        double [] differenceVector = new double[v1.length];
+//        for (int i = 0; i < v1.length; i++) {
+//            differenceVector[i] = v1[i] - v2[i];
+//        }
+//        return differenceVector;
+//    }
+

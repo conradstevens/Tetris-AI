@@ -1,6 +1,7 @@
 package Project.AI.Tournament;
 
 import Project.AI.Genome;
+import com.sun.org.apache.bcel.internal.generic.GETFIELD;
 
 public class TournNode {
 

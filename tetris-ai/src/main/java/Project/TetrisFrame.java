@@ -2,11 +2,9 @@ package Project;
 
 import Project.AI.Genome;
 import Project.AI.Machine;
-import Project.AI.MasterAI;
 import Project.Tetris.Tetris;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -39,29 +37,27 @@ public class TetrisFrame {
         }.start();
     }
 
-    // Make the falling piece drop every second And Have Project.AI make moves
-    public void RunAiMachineDefault(Genome genome) {
-        final Machine machine = new Machine(game, genome);
-        new Thread() {
-            @Override
-            public void run() {
-                game.init();
-                repaint();
+    // Runs the AI and returns the score visually
+    public long visualAiRun(Genome genome, long sleepTime) {
+        JFrame  frame   = makeFameBox();
+        Machine machine = new Machine(game, genome);
+        game.init();
 
-                while (true) {
-                    try {
-                        Thread.sleep(80);
-                        game.backEnd.lower();
-                    } catch (InterruptedException e) { System.out.println("Oops");}
+        frame.invalidate();
+        frame.validate();
+        frame.add(game);
+        repaint();
 
-                    if (game.backEnd.checkOver()) {
-                        game.init();
-                    }
-                    machine.runMashine();
-                    repaint();
-                }
-            }
-        }.start();
+        while (!game.backEnd.checkOver()) {
+            try {
+                Thread.sleep(sleepTime);
+                game.backEnd.lower();
+
+            } catch (InterruptedException e) { e.printStackTrace(); }
+            machine.runMashine();
+            repaint();
+        }
+        return game.backEnd.score;
     }
 
     // Have a Genome play an invisile game and return it's score
