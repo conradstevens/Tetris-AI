@@ -16,10 +16,12 @@ public class Competitors {
     public Competitors(Genome centralGenome, int numCompetitors, double numRuns, Mutation mutator) {
         this.genomeWriter = new GenomeWriter("C://Users//conra//Desktop//tetris-ai//src//main//java//Project//AI//AIData/GenomeData");
         this.numRuns = numRuns;
+
+        centralGenome.sumSocre = 0;
+        compList.add(centralGenome);
         for (int index = 0; index < numCompetitors; index ++) {
             compList.add(centralGenome.mutate(mutator));
         }
-        compList.add(centralGenome);
     }
 
     // Runs all the compSet and determines their score

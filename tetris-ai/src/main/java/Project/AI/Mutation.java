@@ -19,8 +19,8 @@ public class Mutation {
         double[] mutations = getMutationVector();
         for (int i=0; i < 6; i++) {
             mutatedGenome[i] = parentGenome[i] + mutations[i];
-            if (mutatedGenome[i] > 1){parentGenome[i] = 1;}
-            if (mutatedGenome[i] < 0){parentGenome[i] = 0;}
+            if (mutatedGenome[i] > 1){mutatedGenome[i] = 1;}
+            if (mutatedGenome[i] < 0){mutatedGenome[i] = 0;}
         }
         return mutatedGenome;
     }

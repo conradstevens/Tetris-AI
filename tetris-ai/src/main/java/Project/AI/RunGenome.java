@@ -11,16 +11,18 @@ public class RunGenome {
         // ***                                                                                             ***
         // ***                   ---   ENTER THE GENOME INFORMATION HERE  ---                              ***
         // ***                                                                                             ***
-                                            double aggHeight    = 0.4892611682771852;
-                                            double roughness    = 0.5081974962380555;
-                                            double numHoles     = 0.4982826320756096;
-                                            double holeDepth    = 0.13136056990618095;
-                                            double breake       = 0.4464740257527826;
-                                            double hightDiff    = 0.193593847028373;
+                                            double aggHeight    = 0.400116655;
+                                            double roughness    = 0.365804379;
+                                            double numHoles     = 0.656085579;
+                                            double holeDepth    = 0.184972517;
+                                            double breake       = 0.466003722;
+                                            double hightDiff    = 0.155792267;
 
-                                            long   sleepTime    = 2;
+                                            long   sleepTime    = 10;
 
-        // Score: 102
+
+        //        0.400116655	0.365804379	0.656085579	0.184972517	0.466003722	0.155792267	247
+
 
         // ***                                                                                             ***
         // ***                                                                                             ***
@@ -28,7 +30,7 @@ public class RunGenome {
         // ***************************************************************************************************
 
         Genome runningGenome    = new Genome(aggHeight,  roughness, numHoles, holeDepth, breake, hightDiff);
-        RunGeneration genRun    = new RunGeneration(false, sleepTime);
+        RunGeneration genRun    = new RunGeneration(true, sleepTime);
 
         genRun.run(runningGenome, 1);
     }

@@ -9,9 +9,9 @@ public class RunAi {
         // ***                                                                                             ***
         // ***                       ---   ENTER THE AI INFORMATION HERE  ---                              ***
         // ***
-                                    int     tournametSize      = 15;     // Must be of form (2^n - 1), n N
+                                    int     tournametSize      = 63;     // Must be of form (2^n - 1), n N
                                     double  numRunsPerGenome   = 1;     // Only needed if pices are Random
-                                    double  horzCompression    = 0.2;   // How fast will mutations decrease in size
+                                    double  horzCompression    = 0.1;   // How fast will mutations decrease in size
                                     double  startMutation      = 1.2;   // How much mutations to start
                                     long    sleepTime          = 1;
 
